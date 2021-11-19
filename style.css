@@ -1,0 +1,174 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.77rem;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.nav {
+    max-height: 5vh;
+    min-height: 2vh;
+    background-color: darkviolet;
+    padding: 1rem;
+}
+
+.header {
+    width: 100%;
+}
+
+.footer {
+    margin-top: auto;
+    width: 100%;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.bookCard {
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: lightpink;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.pagesAndStatus {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    justify-content: space-between;
+    align-content: space-between;
+    gap: 1rem;
+}
+
+.bookLength {
+    width: 50%;
+    padding: 1rem 0rem 1rem 0rem;
+}
+
+.bookStatus {
+    background-color: burlywood;
+    padding: 1rem;
+    max-width: 35%;
+    border-radius: 0.77rem;
+    align-self: flex-end;
+    text-align: right;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#popup {
+    display:none;
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    z-index:10;
+}
+#popupOverlay {
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    background:black;
+    opacity:0.5;
+    z-index:11;
+}
+#popupContent {
+    padding: 1rem;
+    position:relative;
+    text-align:center;
+    width:33%;
+    margin:0 auto;
+    height:auto;
+    background: lightcoral;
+    margin-top:200px;
+    border:1px solid;
+    z-index:12;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 1rem;
+}
+
+#popupContent > h4:nth-child(1) {
+    margin-bottom: 1rem;
+}
+
+.togglePopup {
+    margin-top: 1rem;
+}
+
+.textInput {
+    border-radius: 0.3rem;
+    border: 0px;
+    box-shadow: black;
+    height: 1.5rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
