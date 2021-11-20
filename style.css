@@ -38,7 +38,7 @@ h4 {
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow: hidden;
+    width: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -87,7 +87,7 @@ h4 {
 }
 
 .bookStatus {
-    background-color: burlywood;
+    background-color: red;
     padding: 1rem;
     max-width: 35%;
     border-radius: 0.77rem;
@@ -98,6 +98,10 @@ h4 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.bookStatus.bookRead {
+    background-color: green;
 }
 
 #popup {
