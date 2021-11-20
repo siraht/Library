@@ -26,7 +26,11 @@ addButton.addEventListener('click', event => {
 })
 
 closeButton.addEventListener('click', event => {
-    addBookToLibrary();
+    if (titleInput.value == '' || authorInput.value == '' || pagesInput.value == '') {
+        alert('Book not added due to missing information')
+    } else {
+        addBookToLibrary();
+    }
     var x = document.getElementById("popup");
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -42,14 +46,15 @@ closeButton.addEventListener('click', event => {
 
 let myLibrary = [theHobbit, theHobbit2, theHobbit3, theHobbit4, theHobbit5, theHobbit6, theHobbit7];
 
+// Unread/Read button Event Listener
 let addStatusListener = (item) => {
     item.addEventListener('click', event => {
-        if (item.read === 'true') {
-            item.read = 'false';
+        if (myLibrary[item.id].read === 'true') {
+            myLibrary[item.id].read = 'false'
             item.textContent = 'Unread'
             item.classList.remove('bookRead')
         } else {
-            item.read = 'true';
+            myLibrary[item.id].read = 'true'
             item.textContent = 'Read'
             item.classList.add('bookRead')
         }
@@ -57,10 +62,26 @@ let addStatusListener = (item) => {
     })
 }
 
+// Delete button Event Listener
+let addDeleteListener = (item) => {
+    item.addEventListener('click', event => {
+        myLibrary.splice(item, 1);
+        addCardsToPage();
+    })
+}
+
 function newCardFunction(i) {
     newCard = document.createElement('div');
     newCard.id = `${myLibrary[i].title} Card`
     newCard.classList.add('bookCard');
+}
+
+function deleteBookCardFunction(i) {
+    deleteButton = document.createElement('img');
+    deleteButton.src = 'delete_black_24dp.svg';
+    deleteButton.classList.add('deleteButton')
+    deleteButton.id = i;
+    newCard.appendChild(deleteButton);
 }
 
 function bookTitleFunction(i) {
@@ -100,6 +121,7 @@ function bookStatusFunction(i) {
         bookStatus.textContent = 'Unread';
     }
     bookStatus.classList.add('bookStatus');
+    bookStatus.id = i;
     secondBookDiv.appendChild(bookStatus);
 }
 
@@ -109,6 +131,7 @@ let addCardsToPage = () => {
     }
     for (let i = 0; i < myLibrary.length; i++) {
         newCardFunction(i);
+        deleteBookCardFunction(i);
         bookTitleFunction(i);
         bookAuthorFunction(i);
         secondBookDivFunction(i);
@@ -117,7 +140,8 @@ let addCardsToPage = () => {
         cardContainer.appendChild(newCard);
 
     }
-    document.querySelectorAll('.bookStatus').forEach(addStatusListener)
+    document.querySelectorAll('.bookStatus').forEach(addStatusListener);
+    document.querySelectorAll('.deleteButton').forEach(addDeleteListener);
 }
 
 function Book(title, author, pages, read) {
