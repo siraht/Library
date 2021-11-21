@@ -1,5 +1,6 @@
 const body = document.querySelector('.body');
 const cardContainer = document.querySelector('.cardContainer');
+const innerCardContainer = document.querySelector('.innerCardContainer');
 const addButton = document.querySelector('.addButton');
 const closeButton = document.querySelector('.togglePopup');
 const cancelButton = document.querySelector('.cancelPopup')
@@ -11,14 +12,14 @@ const readInput = document.querySelector('.readInput');
 
 
 let theHobbit1 = new Book('The Hobbit1', 'J.R.R. Tolkien', '295', 'true')
-let theHobbit2 = new Book('The Hobbit2', 'J.R.R. Tolkien', '295', 'true')
-let theHobbit3 = new Book('The Hobbit3', 'J.R.R. Tolkien', '295', 'false')
-let theHobbit4 = new Book('The Hobbit4', 'J.R.R. Tolkien', '295', 'true')
-let theHobbit5 = new Book('The Hobbit5', 'J.R.R. Tolkien', '295', 'false')
-let theHobbit6 = new Book('The Hobbit6', 'J.R.R. Tolkien', '295', 'false')
-let theHobbit7 = new Book('The Hobbit7', 'J.R.R. Tolkien', '295', 'true')
+let Absalom = new Book('Absalom, Absalom!', 'William Faulkner', '295', 'false')
+let Scanner = new Book('A Scanner Darkly', 'Philip K. Dick', '295', 'true')
+let Brave = new Book('Brave New World', 'Aldous Huxley', '295', 'true')
+let Fellowship = new Book('The Fellowship of the Ring', 'J.R.R. Tolkien', '423', 'true')
+let Towers = new Book('The Two Towers', 'J.R.R. Tolkien', '352', 'true')
+let ReturnOf = new Book('The Return of the King', 'J.R.R. Tolkien', '416', 'true')
 
-let myLibrary = [theHobbit1, theHobbit2, theHobbit3, theHobbit4, theHobbit5, theHobbit6, theHobbit7];
+let myLibrary = [theHobbit1, Absalom, Scanner, Brave, Fellowship, Towers, ReturnOf];
 
 // Add To Library Button functionality
 addButton.addEventListener('click', event => {
@@ -91,8 +92,12 @@ let addDeleteListener = (item) => {
 // AddCardsToPage sub-functions
 function newCardFunction(i) {
     newCard = document.createElement('div');
-    newCard.id = `${myLibrary[i].title} Card`
+    newCard.id = `${myLibrary[i].title}`
     newCard.classList.add('bookCard');
+    innerCard = document.createElement('div');
+    innerCard.id = `${myLibrary[i].title} Inner Card`;
+    innerCard.classList.add('innerCard');
+    newCard.appendChild(innerCard);
 }
 
 function deleteBookCardFunction(i) {
@@ -100,21 +105,21 @@ function deleteBookCardFunction(i) {
     deleteButton.src = 'delete_black_24dp.svg';
     deleteButton.classList.add('deleteButton')
     deleteButton.title = `${myLibrary[i].title}`;
-    newCard.appendChild(deleteButton);
+    newCard.insertBefore(deleteButton, innerCard);
 }
 
 function bookTitleFunction(i) {
     bookTitle = document.createElement('h2');
     bookTitle.textContent = `${myLibrary[i].title}`;
     bookTitle.classList.add('bookTitle')
-    newCard.appendChild(bookTitle);
+    innerCard.appendChild(bookTitle);
 }
 
 function bookAuthorFunction(i) {
     bookAuthor = document.createElement('h4');
     bookAuthor.textContent = `${myLibrary[i].author}`;
     bookAuthor.classList.add('bookAuthor');
-    newCard.appendChild(bookAuthor);
+    innerCard.appendChild(bookAuthor);
 }
 
 function secondBookDivFunction(i) {
