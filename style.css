@@ -107,15 +107,9 @@ h4 {
 .bookStatus {
     background-color: red;
     padding: 1rem;
-    max-width: 35%;
     border-radius: 0.77rem;
     align-self: flex-end;
-    text-align: right;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    border: 0px;
 }
 
 .bookStatus.bookRead {
