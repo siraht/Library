@@ -2,20 +2,25 @@ const body = document.querySelector('.body');
 const cardContainer = document.querySelector('.cardContainer');
 const addButton = document.querySelector('.addButton');
 const closeButton = document.querySelector('.togglePopup');
+const cancelButton = document.querySelector('.cancelPopup')
+const deleteAllButton = document.querySelector('.deleteAllButton');
 const titleInput = document.querySelector('.titleInput');
 const authorInput = document.querySelector('.authorInput');
 const pagesInput = document.querySelector('.pagesInput');
 const readInput = document.querySelector('.readInput');
 
 
-let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'true')
-let theHobbit2 = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'true')
-let theHobbit3 = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'false')
-let theHobbit4 = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'true')
-let theHobbit5 = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'false')
-let theHobbit6 = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'false')
-let theHobbit7 = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'true')
+let theHobbit1 = new Book('The Hobbit1', 'J.R.R. Tolkien', '295', 'true')
+let theHobbit2 = new Book('The Hobbit2', 'J.R.R. Tolkien', '295', 'true')
+let theHobbit3 = new Book('The Hobbit3', 'J.R.R. Tolkien', '295', 'false')
+let theHobbit4 = new Book('The Hobbit4', 'J.R.R. Tolkien', '295', 'true')
+let theHobbit5 = new Book('The Hobbit5', 'J.R.R. Tolkien', '295', 'false')
+let theHobbit6 = new Book('The Hobbit6', 'J.R.R. Tolkien', '295', 'false')
+let theHobbit7 = new Book('The Hobbit7', 'J.R.R. Tolkien', '295', 'true')
 
+let myLibrary = [theHobbit1, theHobbit2, theHobbit3, theHobbit4, theHobbit5, theHobbit6, theHobbit7];
+
+// Add To Library Button functionality
 addButton.addEventListener('click', event => {
     var x = document.getElementById("popup");
     if (x.style.display === "none") {
@@ -25,12 +30,7 @@ addButton.addEventListener('click', event => {
     }
 })
 
-closeButton.addEventListener('click', event => {
-    if (titleInput.value == '' || authorInput.value == '' || pagesInput.value == '') {
-        alert('Book not added due to missing information')
-    } else {
-        addBookToLibrary();
-    }
+let exitPopup = () => {
     var x = document.getElementById("popup");
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -41,20 +41,40 @@ closeButton.addEventListener('click', event => {
     authorInput.value = ''
     pagesInput.value = ''
     readInput.value = ''
+}
+
+closeButton.addEventListener('click', event => {
+    if (titleInput.value == '' || authorInput.value == '' || pagesInput.value == '') {
+        alert('Book not added due to missing information')
+    } else {
+        addBookToLibrary();
+    }
+    exitPopup();
 })
 
+cancelButton.addEventListener('click', event => {
+    exitPopup();
+})
 
-let myLibrary = [theHobbit, theHobbit2, theHobbit3, theHobbit4, theHobbit5, theHobbit6, theHobbit7];
+// Delete All Button Functionality
+deleteAllButton.addEventListener('click', event => {
+    const userPrompt = prompt('Type "purgemewithhyssop" to remove all books from Library', 'no')
+    if (userPrompt == 'purgemewithhyssop') {
+        myLibrary = [];
+        addCardsToPage();
+    }
+})
 
 // Unread/Read button Event Listener
 let addStatusListener = (item) => {
     item.addEventListener('click', event => {
-        if (myLibrary[item.id].read === 'true') {
-            myLibrary[item.id].read = 'false'
+        let arrayPosition = findArrayPosition(item);
+        if (myLibrary[arrayPosition].read === 'true') {
+            myLibrary[arrayPosition].read = 'false'
             item.textContent = 'Unread'
             item.classList.remove('bookRead')
         } else {
-            myLibrary[item.id].read = 'true'
+            myLibrary[arrayPosition].read = 'true'
             item.textContent = 'Read'
             item.classList.add('bookRead')
         }
@@ -62,14 +82,22 @@ let addStatusListener = (item) => {
     })
 }
 
+// Find array position from title
+let findArrayPosition = (item) => {
+    let arrayPosition = myLibrary.findIndex(p => p.title == `${item.title}`);
+    return arrayPosition;
+}
+
 // Delete button Event Listener
 let addDeleteListener = (item) => {
     item.addEventListener('click', event => {
-        myLibrary.splice(item, 1);
+        let arrayPosition = findArrayPosition(item);
+        myLibrary.splice(arrayPosition, 1);
         addCardsToPage();
     })
 }
 
+// AddCardsToPage sub-functions
 function newCardFunction(i) {
     newCard = document.createElement('div');
     newCard.id = `${myLibrary[i].title} Card`
@@ -80,7 +108,7 @@ function deleteBookCardFunction(i) {
     deleteButton = document.createElement('img');
     deleteButton.src = 'delete_black_24dp.svg';
     deleteButton.classList.add('deleteButton')
-    deleteButton.id = i;
+    deleteButton.title = `${myLibrary[i].title}`;
     newCard.appendChild(deleteButton);
 }
 
@@ -113,7 +141,7 @@ function bookLengthFunction(i) {
 }
 
 function bookStatusFunction(i) {
-    bookStatus = document.createElement('p');
+    bookStatus = document.createElement('button');
     if (myLibrary[i].read === 'true') {
         bookStatus.textContent = 'Read';
         bookStatus.classList.add('bookRead');
@@ -121,7 +149,7 @@ function bookStatusFunction(i) {
         bookStatus.textContent = 'Unread';
     }
     bookStatus.classList.add('bookStatus');
-    bookStatus.id = i;
+    bookStatus.title = `${myLibrary[i].title}`;
     secondBookDiv.appendChild(bookStatus);
 }
 
@@ -144,6 +172,7 @@ let addCardsToPage = () => {
     document.querySelectorAll('.deleteButton').forEach(addDeleteListener);
 }
 
+// Book constructor declaration
 function Book(title, author, pages, read) {
     this.title = title
     this.author = author
@@ -154,6 +183,7 @@ function Book(title, author, pages, read) {
     }
 }
 
+// Add To Library function
 function addBookToLibrary() {
     let newBook = new Book(
         `${titleInput.value}`,
@@ -166,5 +196,3 @@ function addBookToLibrary() {
 }
 
 addCardsToPage();
-
-console.log(theHobbit.info());
