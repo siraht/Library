@@ -68,17 +68,8 @@ deleteAllButton.addEventListener('click', event => {
 // Unread/Read button Event Listener
 let addStatusListener = (item) => {
     item.addEventListener('click', event => {
-        let arrayPosition = findArrayPosition(item);
-        if (myLibrary[arrayPosition].read === 'true') {
-            myLibrary[arrayPosition].read = 'false'
-            item.textContent = 'Unread'
-            item.classList.remove('bookRead')
-        } else {
-            myLibrary[arrayPosition].read = 'true'
-            item.textContent = 'Read'
-            item.classList.add('bookRead')
-        }
-
+        let i = findArrayPosition(item);
+        myLibrary[i].readToggle(item);
     })
 }
 
@@ -142,7 +133,7 @@ function bookLengthFunction(i) {
 
 function bookStatusFunction(i) {
     bookStatus = document.createElement('button');
-    if (myLibrary[i].read === 'true') {
+    if (myLibrary[i].status === 'true') {
         bookStatus.textContent = 'Read';
         bookStatus.classList.add('bookRead');
     } else {
@@ -173,13 +164,26 @@ let addCardsToPage = () => {
 }
 
 // Book constructor declaration
-function Book(title, author, pages, read) {
+function Book(title, author, pages, status) {
     this.title = title
     this.author = author
     this.pages = pages
-    this.read = read
+    this.status = status
     this.info = function () {
-        return `${title} by ${author}, ${pages} pages, ${read}`
+        return `${title} by ${author}, ${pages} pages, ${status}`;
+    }
+    this.readToggle = function (item) {
+        if (this.status == 'true') {
+            this.status = 'false';
+            status = 'false';
+            item.textContent = 'Unread'
+            item.classList.remove('bookRead')
+        } else {
+            this.status = 'true';
+            status = 'true';
+            item.textContent = 'Read'
+            item.classList.add('bookRead')
+        }
     }
 }
 
