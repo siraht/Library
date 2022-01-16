@@ -9,6 +9,34 @@ const titleInput = document.querySelector('.titleInput');
 const authorInput = document.querySelector('.authorInput');
 const pagesInput = document.querySelector('.pagesInput');
 const readInput = document.querySelector('.readInput');
+let status2
+
+class Book {
+    constructor(title, author, pages, status2) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.status2 = status2;
+    }
+
+    info = () => {
+        return `${title} by ${author}, ${pages} pages, ${status2}`;
+    }
+
+    readToggle = (item) => {
+        if (this.status2 == 'true') {
+            this.status2 = 'false';
+            status2 = 'false';
+            item.textContent = 'Unread'
+            item.classList.remove('bookRead')
+        } else {
+            this.status2 = 'true';
+            status2 = 'true';
+            item.textContent = 'Read'
+            item.classList.add('bookRead')
+        }
+    }
+}
 
 
 let theHobbit1 = new Book('The Hobbit1', 'J.R.R. Tolkien', '295', 'true')
@@ -89,62 +117,61 @@ let addDeleteListener = (item) => {
     })
 }
 
+function addToDoc(i, element, classs, appendTo = '', id = '', variable = '') {
+    newElement = document.createElement(`${element}`);
+    newElement.classList.add(`${classs}`);
+    if (!appendTo == '') {
+        appendTo.appendChild(newElement);
+    }
+    if (!id == '') {
+        newElement.id = `${id}`;
+    }
+
+    return newElement;
+}
+
 // AddCardsToPage sub-functions
 function newCardFunction(i) {
-    newCard = document.createElement('div');
-    newCard.id = `${myLibrary[i].title}`
-    newCard.classList.add('bookCard');
-    innerCard = document.createElement('div');
-    innerCard.id = `${myLibrary[i].title} Inner Card`;
-    innerCard.classList.add('innerCard');
-    newCard.appendChild(innerCard);
+    thisBookTitle = `${myLibrary[i].title}`
+    newCard = addToDoc(i, 'div', 'bookCard', '', thisBookTitle);
+    innerCardID = `${myLibrary[i].title} Inner Card`;
+    innerCard = addToDoc(i, 'div', 'innerCard', newCard, innerCardID,)
 }
 
 function deleteBookCardFunction(i) {
-    deleteButton = document.createElement('img');
+    let deleteButton = addToDoc(i, 'img', 'deleteButton');
     deleteButton.src = 'delete_black_24dp.svg';
-    deleteButton.classList.add('deleteButton')
     deleteButton.title = `${myLibrary[i].title}`;
     newCard.insertBefore(deleteButton, innerCard);
 }
 
 function bookTitleFunction(i) {
-    bookTitle = document.createElement('h2');
+    let bookTitle = addToDoc(i, 'h2', 'bookTitle', innerCard)
     bookTitle.textContent = `${myLibrary[i].title}`;
-    bookTitle.classList.add('bookTitle')
-    innerCard.appendChild(bookTitle);
 }
 
 function bookAuthorFunction(i) {
-    bookAuthor = document.createElement('h4');
+    let bookAuthor = addToDoc(i, 'h4', 'bookAuthor', innerCard)
     bookAuthor.textContent = `${myLibrary[i].author}`;
-    bookAuthor.classList.add('bookAuthor');
-    innerCard.appendChild(bookAuthor);
 }
 
 function secondBookDivFunction(i) {
-    secondBookDiv = document.createElement('div');
-    secondBookDiv.id = `Pages and status`;
-    secondBookDiv.classList.add('pagesAndStatus');
-    newCard.appendChild(secondBookDiv);
+    secondBookDiv = addToDoc(i, 'div', 'pagesAndStatus', newCard, 'Pages and status')
 }
 
 function bookLengthFunction(i) {
-    bookLength = document.createElement('p');
+    bookLength = addToDoc(i, 'p', 'bookLength', secondBookDiv)
     bookLength.textContent = `${myLibrary[i].pages} pp`;
-    bookLength.classList.add('bookLength');
-    secondBookDiv.appendChild(bookLength);
 }
 
 function bookStatusFunction(i) {
-    bookStatus = document.createElement('button');
-    if (myLibrary[i].status === 'true') {
+    bookStatus = addToDoc(i, 'button', 'bookStatus')
+    if (myLibrary[i].status2 === 'true') {
         bookStatus.textContent = 'Read';
         bookStatus.classList.add('bookRead');
     } else {
         bookStatus.textContent = 'Unread';
     }
-    bookStatus.classList.add('bookStatus');
     bookStatus.title = `${myLibrary[i].title}`;
     secondBookDiv.appendChild(bookStatus);
 }
@@ -166,30 +193,6 @@ let addCardsToPage = () => {
     }
     document.querySelectorAll('.bookStatus').forEach(addStatusListener);
     document.querySelectorAll('.deleteButton').forEach(addDeleteListener);
-}
-
-// Book constructor declaration
-function Book(title, author, pages, status) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.status = status
-    this.info = function () {
-        return `${title} by ${author}, ${pages} pages, ${status}`;
-    }
-    this.readToggle = function (item) {
-        if (this.status == 'true') {
-            this.status = 'false';
-            status = 'false';
-            item.textContent = 'Unread'
-            item.classList.remove('bookRead')
-        } else {
-            this.status = 'true';
-            status = 'true';
-            item.textContent = 'Read'
-            item.classList.add('bookRead')
-        }
-    }
 }
 
 // Add To Library function
