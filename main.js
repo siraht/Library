@@ -117,6 +117,7 @@ let addDeleteListener = (item) => {
     })
 }
 
+// AddCardsToPage sub-functions
 function addToDoc(i, element, classs, appendTo = '', id = '', variable = '') {
     newElement = document.createElement(`${element}`);
     newElement.classList.add(`${classs}`);
@@ -130,7 +131,6 @@ function addToDoc(i, element, classs, appendTo = '', id = '', variable = '') {
     return newElement;
 }
 
-// AddCardsToPage sub-functions
 function newCardFunction(i) {
     thisBookTitle = `${myLibrary[i].title}`
     newCard = addToDoc(i, 'div', 'bookCard', '', thisBookTitle);
