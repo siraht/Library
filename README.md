@@ -1,0 +1,2 @@
+# Personal Library
+This is a webpage that stores books you've read, or would like to read, and allows editing read/unread status, removing books from the library, adding new books, and clearing all books from the library.
